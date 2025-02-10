@@ -2,7 +2,7 @@
 using OrderService.Application.Features.Orders.Commands;
 
 
-namespace OrderService.Application.Features.Orders.Handlers;
+namespace OrderService.Application.Features.Orders.Validators;
 
 public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
 {

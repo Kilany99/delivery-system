@@ -13,6 +13,8 @@ public interface IOrderRepository
 {
     Task AddAsync(Order order);
     Task<Order> GetByIdAsync(Guid id);
+    Task UpdateAsync(Order order);
+
 }
 public class OrderRepository : IOrderRepository
 {
@@ -20,9 +22,16 @@ public class OrderRepository : IOrderRepository
 
     public OrderRepository(OrderDbContext context) => _context = context;
 
-    public async Task AddAsync(Order order) => await _context.Orders.AddAsync(order);
-    public async Task<Order> GetByIdAsync(Guid id)=> await _context.Orders.FindAsync(id)??
-            throw new NullReferenceException("Order not found for provided ID");
-        
-    
+    public async Task AddAsync(Order order)
+    {
+        await _context.Orders.AddAsync(order);
+        await _context.SaveChangesAsync(); 
+    }
+    public async Task<Order> GetByIdAsync(Guid id) => await _context.Orders.FindAsync(id);
+    public async Task UpdateAsync(Order order)
+    {
+        _context.Orders.Update(order);
+        await _context.SaveChangesAsync();
+    }
+
 }

@@ -26,4 +26,14 @@ public class OrdersController : ControllerBase
         var order = await _mediator.Send(new GetOrderByIdQuery(id));
         return Ok(order);
     }
+
+    [HttpPut("{id}/status")]
+    public async Task<IActionResult> UpdateOrderStatus(Guid id, [FromBody] UpdateOrderStatusCommand command)
+    {
+        if (id != command.OrderId)
+            return BadRequest("Order ID mismatch");
+
+        await _mediator.Send(command);
+        return NoContent();
+    }
 }

@@ -1,10 +1,15 @@
 ﻿using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using OrderService.Application.Features.Orders.Commands;
+using OrderService.Application.Features.Orders.Handlers;
+using OrderService.Application.Features.Orders.Queries;
+using OrderService.Domain;
 using OrderService.Infrastructure.Data;
 using OrderService.Infrastructure.Repositories;
 using System.Reflection;
 
-namespace OrderService.API;
+namespace OrderService.API.DependencyInjection;
 
 
 public static class InfrastructureServiceRegistration
@@ -22,6 +27,10 @@ public static class InfrastructureServiceRegistration
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+        services.AddScoped<IRequestHandler<CreateOrderCommand, Guid>, CreateOrderCommandHandler>();
+        services.AddScoped<IRequestHandler<GetOrderByIdQuery, Order>, GetOrderByIdQueryHandler>();
+        services.AddScoped<IRequestHandler<UpdateOrderStatusCommand, Guid>, UpdateOrderStatusCommandHandler>();
 
         return services;
     }

@@ -16,7 +16,10 @@ public class Order : Entity<Guid>
             Status = OrderStatus.Created
         };
     }
-
+    public void UpdateStatus(OrderStatus status)
+    {
+        Status = status;
+    }
     public void MarkAsOutForDelivery() => Status = OrderStatus.OutForDelivery;
 }
 
