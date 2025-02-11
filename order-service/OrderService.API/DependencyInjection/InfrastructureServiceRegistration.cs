@@ -31,6 +31,7 @@ public static class InfrastructureServiceRegistration
         services.AddScoped<IRequestHandler<CreateOrderCommand, Guid>, CreateOrderCommandHandler>();
         services.AddScoped<IRequestHandler<GetOrderByIdQuery, Order>, GetOrderByIdQueryHandler>();
         services.AddScoped<IRequestHandler<UpdateOrderStatusCommand, Guid>, UpdateOrderStatusCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateOrderCommand, Guid>, UpdateOrderCommandHandler>();
 
         return services;
     }
