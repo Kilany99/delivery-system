@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using OrderService.API.Consumers;
 using OrderService.API.DependencyInjection;
 using OrderService.API.Middleware;
 using Serilog;
@@ -24,6 +25,8 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddApplication();  // Extension method to register MediatR, FluentValidation
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddHostedService<DriverLocationConsumer>();
+
 builder.Host.UseSerilog((context, config) =>
 {
     config.WriteTo.Console()

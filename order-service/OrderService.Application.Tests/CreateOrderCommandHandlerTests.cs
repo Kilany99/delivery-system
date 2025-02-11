@@ -27,13 +27,13 @@ namespace OrderService.Application.Tests
         public async Task Handle_ShouldCreateOrder_WhenCommandIsValid()
         {
             // Arrange
-            var command = new CreateOrderCommand("cust-123", "123 Main St");
+            var command = new CreateOrderCommand("cust-123", "123 Main St", 3.5, 665.3);
 
             // Act
             var orderId = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            orderId.Should().NotBeEmpty();
+            orderId.Should().NotBeNull();
             _mockRepo.Verify(r => r.AddAsync(It.IsAny<Order>()), Times.Once);
         }
     }

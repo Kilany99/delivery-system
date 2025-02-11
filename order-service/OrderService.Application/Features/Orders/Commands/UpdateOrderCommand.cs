@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using OrderService.Application.Responses;
 using OrderService.Domain;
 
 
@@ -9,4 +10,4 @@ public record UpdateOrderCommand(
     string? CustomerId,
     string? DeliveryAddress,
     OrderStatus Status
-) : IRequest<Guid>;
+) : IRequest<ApiResponse<Guid>>;

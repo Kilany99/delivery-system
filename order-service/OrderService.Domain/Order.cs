@@ -6,15 +6,23 @@ public class Order : Entity<Guid>
     public string? CustomerId { get; private set; }
     public string? DeliveryAddress { get; private set; }
     public OrderStatus Status { get; private set; }
+    public double DeliveryLatitude { get; set; }
+    public double DeliveryLongitude { get; set; }
 
     // Factory method for controlled creation
-    public static Order Create(string customerId, string deliveryAddress)
+    public static Order Create(
+        string customerId,
+        string deliveryAddress,
+        double deliveryLatitude,
+        double deliveryLongitude)
     {
         return new Order
         {
             Id = Guid.NewGuid(),
             CustomerId = customerId,
             DeliveryAddress = deliveryAddress,
+            DeliveryLatitude = deliveryLatitude,
+            DeliveryLongitude = deliveryLongitude,
             Status = OrderStatus.Created
         };
     }

@@ -40,12 +40,12 @@ services:
     environment:
       ConnectionStrings__Postgres: "Host=postgres;Database=delivery;Username=postgres;Password=1999King"
 
- # driver-service:
- #   build: ./driver-service
- #   ports:
- #     - "8080:8080"
- #   depends_on:
- #     - postgres
+  driver-service:
+    build: ./driver-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
 
 volumes:
   postgres-data:

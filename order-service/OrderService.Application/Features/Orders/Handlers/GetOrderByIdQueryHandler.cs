@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using OrderService.Application.Features.Orders.Queries;
+using OrderService.Application.Responses;
 using OrderService.Domain;
 using OrderService.Infrastructure.Repositories;
 
 
 namespace OrderService.Application.Features.Orders.Handlers;
 
-public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order>
+public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderResponse>
 {
     private readonly IOrderRepository _orderRepository;
 
@@ -15,9 +16,10 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order
         _orderRepository = orderRepository;
     }
 
-    public async Task<Order> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
+    public async Task<OrderResponse> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
     {
         var order = await _orderRepository.GetByIdAsync(request.Id);
-        return order ?? throw new KeyNotFoundException("Order not found.");
+        var orderResponse = new OrderResponse(order.Id, order.CustomerId, order.DeliveryAddress, order.Status);
+        return orderResponse;
     }
 }
