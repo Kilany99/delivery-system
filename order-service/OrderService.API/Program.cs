@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using OrderService.API.Consumers;
 using OrderService.API.DependencyInjection;
 using OrderService.API.Middleware;
+using OrderService.Domain.Entities;
 using OrderService.Infrastructure.Data;
 using Serilog;
 using System.Reflection;
@@ -40,7 +41,7 @@ builder.Services.AddCors(options => {
 });
 
 // Add Identity
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<Customer, IdentityRole>()
     .AddEntityFrameworkStores<OrderDbContext>()
     .AddDefaultTokenProviders();
 

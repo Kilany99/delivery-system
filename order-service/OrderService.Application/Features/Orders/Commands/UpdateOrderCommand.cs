@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using OrderService.Application.Responses;
-using OrderService.Domain;
+using OrderService.Domain.Entities;
 
 
 namespace OrderService.Application.Features.Orders.Commands;

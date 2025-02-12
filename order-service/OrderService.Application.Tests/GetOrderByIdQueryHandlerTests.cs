@@ -2,8 +2,8 @@
 using Moq;
 using OrderService.Application.Features.Orders.Queries;
 using OrderService.Application.Features.Orders.Handlers;
-using OrderService.Domain;
 using OrderService.Infrastructure.Repositories;
+using OrderService.Domain.Entities;
 
 namespace OrderService.Application.Tests
 {

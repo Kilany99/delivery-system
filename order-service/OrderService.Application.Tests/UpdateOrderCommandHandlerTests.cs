@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using OrderService.Application.Features.Orders.Commands;
 using OrderService.Application.Features.Orders.Handlers;
-using OrderService.Domain;
+using OrderService.Domain.Entities;
 using OrderService.Infrastructure.Repositories;
 
 
