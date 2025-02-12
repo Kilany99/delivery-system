@@ -1,17 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OrderService.Domain.Entities;
-
-namespace OrderService.Infrastructure.Data;
-
-public class OrderDbContext : DbContext
+namespace OrderService.Infrastructure.Data
 {
-    public DbSet<Order> Orders { get; set; }
-
-    public OrderDbContext(DbContextOptions<OrderDbContext> options) : base(options) { }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public class OrderDbContext : IdentityDbContext<Customer>
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrderDbContext).Assembly);
-        base.OnModelCreating(modelBuilder);
+        public DbSet<Order> Orders { get; set; }
+
+        public OrderDbContext(DbContextOptions<OrderDbContext> options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrderDbContext).Assembly);
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

@@ -5,7 +5,6 @@ using OrderService.Application.Features.Orders.Commands;
 using OrderService.Application.Features.Orders.Handlers;
 using OrderService.Application.Features.Orders.Queries;
 using OrderService.Application.Responses;
-using OrderService.Domain;
 using OrderService.Infrastructure.Data;
 using OrderService.Infrastructure.Repositories;
 using System.Reflection;

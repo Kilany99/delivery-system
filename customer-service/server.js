@@ -1,9 +1,19 @@
 const express = require('express');
-const app = express();
 const path = require('path');
+const app = express();
 
-app.use(express.static(path.join(__dirname, 'public'))); // Serve static files
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Routes
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/auth', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'auth.html'));
+});
 
 app.listen(3000, () => {
-    console.log('Customer frontend running on http://localhost:3000');
+  console.log('Frontend running on http://localhost:3000');
 });
