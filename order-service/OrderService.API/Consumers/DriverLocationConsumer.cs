@@ -10,12 +10,11 @@ public class DriverLocationConsumer : IHostedService
 {
     private readonly IConsumer<string, DriverLocationEvent> _consumer;
     private readonly ILogger<DriverLocationConsumer> _logger;
-    private readonly IOrderRepository _orderRepository;
-
-    public DriverLocationConsumer(ILogger<DriverLocationConsumer> logger,IOrderRepository orderRepository)
+    private readonly IServiceScopeFactory _scopeFactory;
+    public DriverLocationConsumer(ILogger<DriverLocationConsumer> logger, IServiceScopeFactory scopeFactory)
     {
         _logger = logger;
-        _orderRepository = orderRepository; 
+        _scopeFactory = scopeFactory;
 
         var config = new ConsumerConfig
         {
@@ -48,19 +47,23 @@ public class DriverLocationConsumer : IHostedService
                         location.Latitude,
                         location.Longitude
                     );
+                    using (var scope = _scopeFactory.CreateScope())  // ✅ Create a scope
+                    {
+                        var orderRepository = scope.ServiceProvider.GetRequiredService<IOrderRepository>();  // ✅ Resolve scoped service
 
-                    // Add logic to check proximity to orders
-                    var orders = await _orderRepository.GetOrdersNearLocationAsync(
+
+                        var orders = await orderRepository.GetOrdersNearLocationAsync(
                         location.Latitude,
                         location.Longitude,
                         1000 // 1km radius
                     );
 
-                    foreach (var order in orders)
-                    {
-                        order.MarkAsOutForDelivery();
-                        await _orderRepository.UpdateAsync(order);
-                        _logger.LogInformation("Order {OrderId} is out for delivery", order.Id);
+                        foreach (var order in orders)
+                        {
+                            order.MarkAsOutForDelivery();
+                            await orderRepository.UpdateAsync(order);
+                            _logger.LogInformation("Order {OrderId} is out for delivery", order.Id);
+                        }
                     }
                 }
                 catch (Exception ex)

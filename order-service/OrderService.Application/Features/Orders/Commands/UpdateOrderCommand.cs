@@ -7,7 +7,9 @@ namespace OrderService.Application.Features.Orders.Commands;
 
 public record UpdateOrderCommand(
     Guid OrderId,
-    string? CustomerId,
-    string? DeliveryAddress,
-    OrderStatus Status
+    string CustomerId,
+    string DeliveryAddress,
+    OrderStatus Status,
+    double DeliveryLatitude,
+    double DeliveryLongitude
 ) : IRequest<ApiResponse<Guid>>;

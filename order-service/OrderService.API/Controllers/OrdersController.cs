@@ -30,18 +30,18 @@ public class OrdersController : ControllerBase
     /// }
     /// </example>
     [HttpPost]
-    public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
+    public async Task<ApiResponse<Guid>> CreateOrder([FromBody] CreateOrderCommand command)
     {
         var orderId = await _mediator.Send(command);
-        return CreatedAtAction(nameof(GetOrder), new { id = orderId }, orderId);
+        return orderId;
     }
 
     /// <summary>Gets an order with its guide.</summary>
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetOrder(Guid id)
+    public async Task<OrderResponse> GetOrder(Guid id)
     {
         var order = await _mediator.Send(new GetOrderByIdQuery(id));
-        return Ok(order);
+        return order;
     }
     /// <summary>Updates order status.</summary>
 

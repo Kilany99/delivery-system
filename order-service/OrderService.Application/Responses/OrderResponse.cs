@@ -7,5 +7,23 @@ using System.Threading.Tasks;
 
 namespace OrderService.Application.Responses;
 
-public record OrderResponse(Guid Id, string CustomerId, string DeliveryAddress, OrderStatus Status);
 
+public class OrderResponse
+{
+    public Guid Id { get; set; }
+    public string CustomerId { get; set; }
+    public string DeliveryAddress { get; set; }
+    public OrderStatus Status {  get; set; }
+    public double DeliveryLatitude { get; set; }
+    public double DeliveryLongitude { get; set; }
+
+    public OrderResponse(Guid id,string cutomerId,string delvAddress,OrderStatus orderStatus, double latitude,double longitude) 
+    {
+        Id = id;
+        CustomerId = cutomerId;
+        DeliveryAddress = delvAddress;
+        DeliveryLatitude = latitude;
+        DeliveryLongitude = longitude;
+        Status = orderStatus;
+    }
+}
