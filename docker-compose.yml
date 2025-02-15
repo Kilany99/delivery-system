@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   postgres:
@@ -23,16 +22,17 @@ services:
       - zookeeper
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
     ports:
       - "9092:9092"
+      - "29092:29092"
 
   order-service:
     build:
-      context: .
-      dockerfile: order-service/Dockerfile  
-
+      context: ./order-service
+      dockerfile: Dockerfile
     ports:
       - "5000:80"
     depends_on:
@@ -41,11 +41,33 @@ services:
       ConnectionStrings__Postgres: "Host=postgres;Database=delivery;Username=postgres;Password=1999King"
 
   driver-service:
-    build: ./driver-service
+    build:
+      context: ./driver-service
+      dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8080:80"
     depends_on:
       - postgres
+    environment:
+      ConnectionStrings__Postgres: "Host=postgres;Database=driver;Username=postgres;Password=1999King"
+
+  customer-service:
+    build:
+      context: ./customer-service
+      dockerfile: Dockerfile
+    ports:
+      - "5050:80"
+
+  mongodb:
+    image: mongo:6.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1999King
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
 
 volumes:
   postgres-data:
+  mongodb-data:

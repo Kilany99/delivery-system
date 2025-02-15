@@ -49,7 +49,7 @@ public class DriverLocationConsumer : IHostedService
                     );
                     using (var scope = _scopeFactory.CreateScope())  // ✅ Create a scope
                     {
-                        var orderRepository = scope.ServiceProvider.GetRequiredService<IOrderRepository>();  // ✅ Resolve scoped service
+                        var orderRepository = scope.ServiceProvider.GetRequiredService<IOrderRepository>();  // Resolve scoped service
 
 
                         var orders = await orderRepository.GetOrdersNearLocationAsync(
