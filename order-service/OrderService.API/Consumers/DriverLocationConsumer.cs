@@ -1,4 +1,4 @@
-﻿using Confluent.Kafka;
+﻿﻿using Confluent.Kafka;
 using OrderService.API.Models;
 using OrderService.API.Serialization;
 using OrderService.Infrastructure.Repositories;
@@ -11,14 +11,14 @@ public class DriverLocationConsumer : IHostedService
     private readonly IConsumer<string, DriverLocationEvent> _consumer;
     private readonly ILogger<DriverLocationConsumer> _logger;
     private readonly IServiceScopeFactory _scopeFactory;
-    public DriverLocationConsumer(ILogger<DriverLocationConsumer> logger, IServiceScopeFactory scopeFactory)
+    public DriverLocationConsumer(ILogger<DriverLocationConsumer> logger, IServiceScopeFactory scopeFactory,IConfiguration configuration)
     {
         _logger = logger;
         _scopeFactory = scopeFactory;
 
         var config = new ConsumerConfig
         {
-            BootstrapServers = "localhost:9092",
+            BootstrapServers = configuration["kafka:BootstrapServers"],
             GroupId = "order-service",
             AutoOffsetReset = AutoOffsetReset.Earliest
         };
