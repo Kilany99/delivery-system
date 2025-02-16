@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OrderService.Infrastructure.Helpers;
-using OrderService.Domain;
 using OrderService.Infrastructure.Data;
+using OrderService.Domain.Entities;
 namespace OrderService.Infrastructure.Repositories;
 
 

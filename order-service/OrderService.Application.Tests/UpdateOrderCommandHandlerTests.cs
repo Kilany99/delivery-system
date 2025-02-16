@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using OrderService.Application.Features.Orders.Commands;
 using OrderService.Application.Features.Orders.Handlers;
-using OrderService.Domain;
+using OrderService.Domain.Entities;
 using OrderService.Infrastructure.Repositories;
 
 
@@ -25,7 +25,7 @@ namespace OrderService.Application.Tests
         {
             // Arrange
             var orderId = Guid.NewGuid();
-            var existingOrder = Order.Create("cust-123", "123 Main St");
+            var existingOrder = Order.Create("cust-123", "123 Main St",55.3,88.3);
             // Normally the repository is responsible for setting the order's ID,
             // so we simulate that by setting it manually:
             existingOrder.GetType().GetProperty("Id")!.SetValue(existingOrder, orderId);

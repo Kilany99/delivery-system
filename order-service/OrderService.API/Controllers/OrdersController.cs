@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OrderService.Application.Features.Orders.Commands;
 using OrderService.Application.Features.Orders.Queries;
@@ -9,6 +10,7 @@ namespace OrderService.API.Controllers;
 /// <summary>
 /// Service endpoint for managing orders.
 /// </summary>
+[Authorize]
 [ApiController]
 [Route("api/orders")]
 public class OrdersController : ControllerBase
@@ -30,18 +32,18 @@ public class OrdersController : ControllerBase
     /// }
     /// </example>
     [HttpPost]
-    public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
+    public async Task<ApiResponse<Guid>> CreateOrder([FromBody] CreateOrderCommand command)
     {
         var orderId = await _mediator.Send(command);
-        return CreatedAtAction(nameof(GetOrder), new { id = orderId }, orderId);
+        return orderId;
     }
 
     /// <summary>Gets an order with its guide.</summary>
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetOrder(Guid id)
+    public async Task<OrderResponse> GetOrder(Guid id)
     {
         var order = await _mediator.Send(new GetOrderByIdQuery(id));
-        return Ok(order);
+        return order;
     }
     /// <summary>Updates order status.</summary>
 

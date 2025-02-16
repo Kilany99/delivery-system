@@ -5,7 +5,6 @@ using OrderService.Application.Features.Orders.Commands;
 using OrderService.Application.Features.Orders.Handlers;
 using OrderService.Application.Features.Orders.Queries;
 using OrderService.Application.Responses;
-using OrderService.Domain;
 using OrderService.Infrastructure.Data;
 using OrderService.Infrastructure.Repositories;
 using System.Reflection;
@@ -29,7 +28,7 @@ public static class InfrastructureServiceRegistration
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-        services.AddScoped<IRequestHandler<CreateOrderCommand, ApiResponse<Guid>>, CreateOrderCommandHandler>();
+        
         services.AddScoped<IRequestHandler<GetOrderByIdQuery, OrderResponse>, GetOrderByIdQueryHandler>();
         services.AddScoped<IRequestHandler<UpdateOrderStatusCommand, Guid>, UpdateOrderStatusCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateOrderCommand, ApiResponse<Guid>>, UpdateOrderCommandHandler>();

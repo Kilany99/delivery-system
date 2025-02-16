@@ -1,6 +1,6 @@
 ﻿using OrderService.Domain.Exceptions;
 
-namespace OrderService.Domain;
+namespace OrderService.Domain.Entities;
 public class Order : Entity<Guid>
 {
     public string? CustomerId { get; private set; }
@@ -26,7 +26,7 @@ public class Order : Entity<Guid>
             Status = OrderStatus.Created
         };
     }
-    public void UpdateStatus(OrderStatus status)=>
+    public void UpdateStatus(OrderStatus status) =>
         Status = status;
     public void UpdateCustomerId(string customerId)
     {
